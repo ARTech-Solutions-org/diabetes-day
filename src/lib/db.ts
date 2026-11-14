@@ -4,9 +4,7 @@ import postgres from 'postgres';
  * Neon PostgreSQL Connection Client.
  * Configured for serverless pooling with SSL enabled.
  */
-const connectionString =
-  process.env.DATABASE_URL ||
-  'postgresql://user:password@ep-xxx-pooler.region.aws.neon.tech/neondb?sslmode=require';
+const connectionString = process.env.DATABASE_URL || '';
 
 export const sql = postgres(connectionString, {
   max: 10,
