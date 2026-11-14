@@ -193,7 +193,6 @@ export default function ContactPage() {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      placeholder="مثال: عبدالله احمد محمد"
                       className="w-full rounded-2xl border border-slate-200/90 bg-slate-50/50 px-4 py-3.5 text-sm sm:text-base text-slate-800 transition focus:border-primary focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/15"
                     />
                   </div>
@@ -225,7 +224,6 @@ export default function ContactPage() {
                         dir="ltr"
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
-                        placeholder="5x xxx xxxx"
                         className="w-full text-left rounded-2xl border border-slate-200/90 bg-slate-50/50 px-4 py-3.5 text-sm sm:text-base text-slate-800 transition focus:border-primary focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/15"
                       />
                     </div>
@@ -246,7 +244,6 @@ export default function ContactPage() {
                       list="cities-list"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="مثال: الرياض"
                       className="w-full rounded-2xl border border-slate-200/90 bg-slate-50/50 px-4 py-3.5 text-sm sm:text-base text-slate-800 transition focus:border-primary focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/15"
                     />
                     <datalist id="cities-list">
