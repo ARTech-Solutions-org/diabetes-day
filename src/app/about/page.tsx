@@ -3,7 +3,6 @@ import {
   ArrowLeft,
   BookOpen,
   CalendarCheck,
-  ChevronDown,
   ClipboardCheck,
   Footprints,
   Route,
@@ -68,25 +67,6 @@ const journey = [
     number: '٦',
     title: 'تابع خطوتك',
     description: 'يدعم فريق الحملة تنسيق الوصول إلى الخدمة ومتابعة خطوة الإحالة وفق الآلية المتاحة وبموافقتك، بينما يتولى مقدم الرعاية التقييم الطبي وخطة العلاج والمتابعة السريرية.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'ما هي مبادرة توازنها صح، وما علاقتها باليوم العالمي للسكري و اسبوع التوعية بالسمنة؟',
-    answer: '«توازنها صح» حملة مجتمعية للتوعية بالسمنة وأمراض السكري تجمع بين الأنشطة الميدانية والأدوات الرقمية لدعم الكشف المبكر والوصول إلى الرعاية المناسبة.',
-  },
-  {
-    question: 'هل تقدم المنصة استشارات طبية رسمية؟',
-    answer: 'يساعدك فريق الحملة على معرفة خدمات التقييم أو الاستشارة المتاحة لدى الجهات المشاركة. ويتولى مقدم الرعاية التقييم الطبي وخطة العلاج والمتابعة السريرية.',
-  },
-  {
-    question: 'كيف يمكنني الاستفادة من المنصة التفاعلية؟',
-    answer: 'يمكنك استخدام حاسبة مؤشر كتلة الجسم من داخل الموقع للتعرّف على أحد مؤشراتك الأولية.',
-  },
-  {
-    question: 'هل بياناتي محمية عند التسجيل؟',
-    answer: 'تُحفظ بيانات الاستشارة بصورة آمنة لحماية خصوصيتك.',
   },
 ];
 
@@ -162,24 +142,6 @@ export default function AboutPage() {
               </li>
             ))}
           </ol>
-        </section>
-
-        <section aria-labelledby="faq-heading" className="mx-auto max-w-3xl">
-          <h2 id="faq-heading" className="text-2xl font-black text-navy sm:text-3xl">الأسئلة الشائعة</h2>
-          <div className="mt-5 space-y-4">
-            {faqs.map(({ question, answer }, index) => (
-              <details key={question} name="campaign-faq" open={index === 0} className="group glass-panel rounded-2xl border border-slate-200/80 p-5 shadow-sm">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-bold text-navy [&::-webkit-details-marker]:hidden">
-                  {question}
-                  <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 group-open:rotate-180" />
-                </summary>
-                <p className="mt-3 leading-relaxed text-slate-700">{answer}</p>
-              </details>
-            ))}
-          </div>
-          <Link href="/contact" className="mt-6 inline-flex rounded-xl bg-navy px-5 py-2.5 font-bold text-white hover:bg-navy-light">
-            تواصل معنا
-          </Link>
         </section>
       </div>
     </div>
