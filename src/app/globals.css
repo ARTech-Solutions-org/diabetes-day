@@ -111,22 +111,94 @@ body {
   pointer-events: none;
 }
 
-/* Infinite Marquee / News Ticker */
-@keyframes marquee {
+/* ═══════════════════════════════════════════
+   Partners Infinite Marquee — pure CSS
+   Technique: render [A A], animate translateX(0 → -50%).
+   At -50% the view is visually identical to the start,
+   so the CSS reset is completely invisible → seamless loop.
+═══════════════════════════════════════════ */
+
+@keyframes partners-scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
+.partners-marquee {
   display: flex;
+  flex-wrap: nowrap;
   width: max-content;
-  /* 32 s = smooth & readable; linear = no ease jerk */
-  animation: marquee 32s linear infinite;
+  animation: partners-scroll 32s linear infinite;
   will-change: transform;
+  align-items: center;
 }
 
-/* Pause on hover so users can read a logo without chasing it */
-.animate-marquee:hover {
+/* Pause while hovering anywhere on the strip */
+.partners-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Individual partner card */
+.partner-card {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 220px;
+  height: 130px;
+  margin: 0 16px;              /* ← visible gap on both sides */
+
+  background: #ffffff;
+  border: 1.5px solid rgba(203, 213, 225, 0.8);
+  border-radius: 20px;
+  padding: 18px 20px;
+
+  box-shadow: 0 1px 4px rgba(26, 70, 104, 0.06);
+  cursor: pointer;
+
+  /* Smooth hover transition */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-6px) scale(1.07);
+  box-shadow: 0 16px 40px -8px rgba(101, 203, 204, 0.28),
+              0 4px 12px -2px rgba(26, 70, 104, 0.1);
+  border-color: rgba(101, 203, 204, 0.6);
+}
+
+.partner-card img {
+  max-height: 80px;
+  max-width: 86%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: transform 0.3s ease;
+}
+
+.partner-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Responsive tweaks */
+@media (min-width: 640px) {
+  .partner-card {
+    width: 250px;
+    height: 148px;
+    margin: 0 18px;
+  }
+  .partner-card img { max-height: 90px; }
+}
+
+@media (min-width: 1024px) {
+  .partner-card {
+    width: 280px;
+    height: 160px;
+    margin: 0 22px;
+  }
+  .partner-card img { max-height: 100px; }
+}
+
 

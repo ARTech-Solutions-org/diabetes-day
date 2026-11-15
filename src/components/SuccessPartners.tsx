@@ -21,13 +21,8 @@ const PARTNERS: Partner[] = [
   { id: '9', name: 'CISA', file: 'Path 9.svg' },
 ];
 
-/*
-  Seamless infinite loop technique:
-  - Render [A, A] (two identical sets)
-  - Animate from translateX(0) → translateX(-50%)
-  - At -50% the visual position is exactly where it started → snap reset is invisible
-  - User sees: ...1 2 3 4 5 6 7 8 9 | 1 2 3 4 5 6 7 8 9 | 1 2 3...  forever
-*/
+// [A, A] — two identical sets so the loop is seamless: at -50% we're
+// visually back at the start, and CSS resets to 0 without any flicker.
 const LOOP_ITEMS = [...PARTNERS, ...PARTNERS];
 
 export default function SuccessPartners() {
@@ -76,54 +71,34 @@ export default function SuccessPartners() {
 
       {/* ── Infinite Marquee Strip ── */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.25 }}
         className="relative w-full overflow-hidden"
       >
-        {/* Left soft fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 sm:w-44 md:w-60 z-10 bg-gradient-to-r from-white/95 via-white/60 to-transparent" />
-        {/* Right soft fade */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 sm:w-44 md:w-60 z-10 bg-gradient-to-l from-white/95 via-white/60 to-transparent" />
+        {/* Left soft-fade mask */}
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-10"
+          style={{ width: '14%', background: 'linear-gradient(to right, white 40%, transparent)' }}
+        />
+        {/* Right soft-fade mask */}
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10"
+          style={{ width: '14%', background: 'linear-gradient(to left, white 40%, transparent)' }}
+        />
 
-        {/* Scrolling track — dir="ltr" keeps left-to-right scroll regardless of page RTL */}
-        <div className="animate-marquee py-5" dir="ltr">
+        {/* The scrolling track */}
+        <div className="partners-marquee py-6" dir="ltr">
           {LOOP_ITEMS.map((partner, index) => (
             <div
               key={`${partner.id}-${index}`}
-              className="
-                group/card
-                flex-shrink-0 inline-flex items-center justify-center
-                w-52 sm:w-60 md:w-68
-                h-28 sm:h-32 md:h-36
-                mx-3 sm:mx-4
-                rounded-2xl
-                bg-white
-                border border-slate-200/80
-                shadow-sm
-                hover:shadow-lg hover:shadow-primary/15
-                hover:border-primary/40
-                hover:scale-[1.06]
-                hover:-translate-y-1
-                transition-all duration-300 ease-out
-                cursor-pointer
-                p-4
-              "
+              className="partner-card"
               title={partner.name}
             >
               <img
                 src={`/logos/${encodeURIComponent(partner.file)}`}
                 alt={partner.name}
-                className="
-                  max-h-16 sm:max-h-20 md:max-h-24
-                  max-w-[85%]
-                  w-auto h-auto
-                  object-contain
-                  transition-transform duration-300
-                  group-hover/card:scale-110
-                "
-                loading="lazy"
                 draggable={false}
               />
             </div>
