@@ -21,10 +21,6 @@ const PARTNERS: Partner[] = [
   { id: '9', name: 'CISA', file: 'Path 9.svg' },
 ];
 
-// [A, A] — two identical sets so the loop is seamless: at -50% we're
-// visually back at the start, and CSS resets to 0 without any flicker.
-const LOOP_ITEMS = [...PARTNERS, ...PARTNERS];
-
 export default function SuccessPartners() {
   return (
     <section className="relative w-full overflow-hidden mt-20 sm:mt-28 mb-12">
@@ -76,6 +72,7 @@ export default function SuccessPartners() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.25 }}
         className="relative w-full overflow-hidden"
+        dir="ltr"
       >
         {/* Left soft-fade mask */}
         <div
@@ -88,19 +85,18 @@ export default function SuccessPartners() {
           style={{ width: '14%', background: 'linear-gradient(to left, white 40%, transparent)' }}
         />
 
-        {/* The scrolling track */}
-        <div className="partners-marquee py-6" dir="ltr">
-          {LOOP_ITEMS.map((partner, index) => (
-            <div
-              key={`${partner.id}-${index}`}
-              className="partner-card"
-              title={partner.name}
-            >
-              <img
-                src={`/logos/${encodeURIComponent(partner.file)}`}
-                alt={partner.name}
-                draggable={false}
-              />
+        <div className="partners-marquee py-6">
+          {[0, 1, 2].map((copy) => (
+            <div key={copy} className="partners-marquee-group" aria-hidden={copy > 0}>
+              {PARTNERS.map((partner) => (
+                <div key={partner.id} className="partner-card" title={partner.name}>
+                  <img
+                    src={`/logos/${encodeURIComponent(partner.file)}`}
+                    alt={partner.name}
+                    draggable={false}
+                  />
+                </div>
+              ))}
             </div>
           ))}
         </div>
