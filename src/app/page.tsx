@@ -39,19 +39,24 @@ export default function HomePage() {
           </p>
 
           {/* Type 2 Diabetes Awareness Brochure Link */}
-          <div className="mt-4 flex items-center justify-center">
+          <div className="mt-6 flex justify-center">
             <a
               href="/docs/diabetes-awareness-guide.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-2xl glass-panel px-4 py-2 text-xs sm:text-sm font-bold text-navy border border-primary/30 shadow-sm transition hover:bg-white hover:border-primary hover:shadow-md"
+              className="group inline-flex max-w-full items-center gap-2.5 rounded-2xl border border-primary bg-gradient-to-l from-primary/40 via-primary-light to-secondary/25 px-3 py-2.5 text-navy shadow-md shadow-primary/25 transition hover:border-primary-dark hover:shadow-lg hover:shadow-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none sm:gap-3 sm:px-4"
               title="تصفح وتحميل كتيّب التوعية لمرضى السكري من النوع الثاني"
             >
-              <FileText className="h-4 w-4 text-primary transition-transform group-hover:scale-110" />
-              <span className="underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">
-                تصفح كتيّب التوعية لمرضى السكري من النوع الثاني (PDF)
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/90 shadow-sm sm:h-10 sm:w-10">
+                <FileText aria-hidden="true" className="h-5 w-5" strokeWidth={2.5} />
               </span>
-              <ArrowUpRight className="h-3.5 w-3.5 text-slate-400 group-hover:text-primary transition-colors" />
+              <span className="min-w-0 text-balance text-start text-sm font-black leading-6 sm:text-base">
+                تصفح كتيّب التوعية لمرضى السكري من النوع الثاني
+              </span>
+              <span dir="ltr" className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-navy px-2 py-1 text-xs font-bold text-white transition-colors group-hover:bg-navy-light">
+                PDF
+                <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+              </span>
             </a>
           </div>
 
