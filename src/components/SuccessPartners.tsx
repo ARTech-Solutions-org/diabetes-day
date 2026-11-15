@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Handshake, Sparkles } from 'lucide-react';
+import { Handshake, Sparkles, Activity } from 'lucide-react';
 
 interface Partner {
   id: string;
@@ -21,14 +21,17 @@ const PARTNERS: Partner[] = [
   { id: '9', name: 'CISA', file: 'Path 9.svg' },
 ];
 
+// Duplicate partners array to ensure seamless infinite looping marquee
+const TICKER_ITEMS = [...PARTNERS, ...PARTNERS];
+
 export default function SuccessPartners() {
   return (
-    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-20 sm:mt-28 mb-8">
-      {/* Subtle Background Glow */}
-      <div className="pointer-events-none absolute left-1/2 -top-16 -translate-x-1/2 h-64 w-[600px] rounded-full bg-primary/10 blur-3xl opacity-70" />
+    <section className="relative w-full overflow-hidden mt-20 sm:mt-28 mb-12">
+      {/* Subtle Ambient Background Glow */}
+      <div className="pointer-events-none absolute left-1/2 -top-16 -translate-x-1/2 h-72 w-[800px] rounded-full bg-primary/10 blur-3xl opacity-70" />
 
       {/* Section Header */}
-      <div className="relative text-center max-w-3xl mx-auto">
+      <div className="relative text-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +41,7 @@ export default function SuccessPartners() {
         >
           <Handshake className="h-4 w-4 text-primary" />
           <span>شركاء النجاح والتمكين الصحي</span>
-          <span className="flex h-1.5 w-1.5 rounded-full bg-secondary animate-pulse" />
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
         </motion.div>
 
         <motion.h2
@@ -65,39 +68,46 @@ export default function SuccessPartners() {
         </motion.p>
       </div>
 
-      {/* Partners Showcase (All 9 SVGs in Full Color) */}
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.25 }}
-        className="relative mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9 gap-3 sm:gap-4 items-center justify-center"
-      >
-        {PARTNERS.map((partner, index) => (
-          <motion.div
-            key={partner.id}
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.05 * index }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="group relative flex flex-col items-center justify-center rounded-2xl bg-white p-3 sm:p-4 h-24 sm:h-28 shadow-sm border border-slate-100 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
-            title={partner.name}
-          >
-            <div className="relative flex h-full w-full items-center justify-center">
-              <img
-                src={`/logos/${encodeURIComponent(partner.file)}`}
-                alt={partner.name}
-                className="max-h-12 sm:max-h-14 max-w-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                loading="lazy"
-              />
+      {/* News-Ticker Style Marquee Showcase */}
+      <div className="relative w-full overflow-hidden py-4">
+        {/* Left & Right Soft Fade Gradients (Broadcast / Ticker Edge Fade) */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 via-slate-50/90 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-36 md:w-48 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent z-10" />
+
+        {/* Continuous Scrolling Track */}
+        <div 
+          className="flex gap-5 sm:gap-6 animate-marquee select-none"
+          dir="ltr"
+        >
+          {TICKER_ITEMS.map((partner, index) => (
+            <div
+              key={`${partner.id}-${index}`}
+              className="group/card flex-shrink-0 w-64 sm:w-72 md:w-80 h-36 sm:h-40 rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 shadow-sm border border-slate-200/80 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col items-center justify-between cursor-pointer"
+              title={partner.name}
+            >
+              {/* Logo Area (Large, High-Fidelity SVG in Full Color) */}
+              <div className="relative flex flex-1 w-full items-center justify-center p-2">
+                <img
+                  src={`/logos/${encodeURIComponent(partner.file)}`}
+                  alt={partner.name}
+                  className="max-h-20 sm:max-h-24 max-w-[88%] w-auto h-auto object-contain transition-transform duration-300 group-hover/card:scale-108"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Partner Name Label */}
+              <div className="w-full pt-2 border-t border-slate-100 flex items-center justify-center">
+                <span className="text-xs sm:text-sm font-semibold text-slate-500 group-hover/card:text-navy transition-colors truncate text-center max-w-full px-1">
+                  {partner.name}
+                </span>
+              </div>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
+          ))}
+        </div>
+      </div>
 
       {/* Decorative Bottom Endline */}
-      <div className="mt-12 flex items-center justify-center gap-3 text-xs text-slate-400">
+      <div className="mt-10 flex items-center justify-center gap-3 text-xs text-slate-400 px-4">
         <div className="h-px w-16 bg-gradient-to-r from-transparent to-slate-200" />
         <div className="flex items-center gap-1.5 font-medium text-slate-500">
           <Sparkles className="h-3.5 w-3.5 text-primary" />
