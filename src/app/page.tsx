@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import LivingBalanceRing from '@/components/LivingBalanceRing';
 import HeroPortalCards from '@/components/HeroPortalCards';
+import SuccessPartners from '@/components/SuccessPartners';
 import {
   Activity,
   ShieldCheck,
@@ -97,6 +98,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Success Partners Section */}
+      <SuccessPartners />
     </div>
   );
 }
