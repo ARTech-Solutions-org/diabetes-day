@@ -1,64 +1,29 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Handshake, Sparkles, Building2 } from 'lucide-react';
+import { Handshake, Sparkles } from 'lucide-react';
 
 interface Partner {
   id: string;
   name: string;
-  category: string;
-  logo: string;
-  width: number;
-  height: number;
+  file: string;
 }
 
 const PARTNERS: Partner[] = [
-  {
-    id: 'seha',
-    name: 'مستشفى صحة الافتراضي',
-    category: 'الرعاية الصحية الرقمية',
-    logo: '/logos/Seha-Virtual-Hospital.png',
-    width: 478,
-    height: 332,
-  },
-  {
-    id: 'nahdi',
-    name: 'صيدليات النهدي',
-    category: 'شريك الرعاية المجتمعية',
-    logo: '/logos/Nahdi.png',
-    width: 828,
-    height: 494,
-  },
-  {
-    id: 'riyadh-metro',
-    name: 'قطار الرياض',
-    category: 'شريك التوعية والنقل العام',
-    logo: '/logos/Riyadh-Metro.png',
-    width: 1570,
-    height: 567,
-  },
-  {
-    id: 'ratp-dev',
-    name: 'RATP Dev - سابتكو',
-    category: 'مشغل النقل العام',
-    logo: '/logos/RATP-Dev-SAPTCO.png',
-    width: 740,
-    height: 140,
-  },
-  {
-    id: 'flow',
-    name: 'FLOW مشغل قطار الرياض',
-    category: 'شريك العمليات والتشغيل',
-    logo: '/logos/FLOW-Riyadh-Metro-Operator.png',
-    width: 2000,
-    height: 497,
-  },
+  { id: '1', name: 'قطار الرياض', file: 'Bitmap (1).svg' },
+  { id: '2', name: 'مستشفى صحة الافتراضي', file: 'Bitmap (2).svg' },
+  { id: '3', name: 'صيدليات النهدي', file: 'Bitmap (3).svg' },
+  { id: '4', name: 'FLOW مشغل قطار الرياض', file: 'Bitmap (4).svg' },
+  { id: '5', name: 'RATP Dev - سابتكو', file: 'Bitmap (5).svg' },
+  { id: '6', name: 'جامعة الملك سعود', file: 'Path 20.svg' },
+  { id: '7', name: 'شركة ليلي للأدوية', file: 'Path 31.svg' },
+  { id: '8', name: 'مجموعة د. سليمان الحبيب الطبية', file: 'Path 6.svg' },
+  { id: '9', name: 'CISA', file: 'Path 9.svg' },
 ];
 
 export default function SuccessPartners() {
   return (
-    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-24 sm:mt-32">
+    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-20 sm:mt-28 mb-8">
       {/* Subtle Background Glow */}
       <div className="pointer-events-none absolute left-1/2 -top-16 -translate-x-1/2 h-64 w-[600px] rounded-full bg-primary/10 blur-3xl opacity-70" />
 
@@ -100,47 +65,32 @@ export default function SuccessPartners() {
         </motion.p>
       </div>
 
-      {/* Partners Cards Showcase Grid */}
+      {/* Partners Showcase (All 9 SVGs in Full Color) */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.25 }}
-        className="relative mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6"
+        className="relative mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9 gap-3 sm:gap-4 items-center justify-center"
       >
         {PARTNERS.map((partner, index) => (
           <motion.div
             key={partner.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1 * index }}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="group relative flex flex-col items-center justify-between rounded-3xl bg-white/90 p-5 sm:p-6 shadow-[0_4px_25px_rgba(26,70,104,0.06)] border border-slate-100 hover:border-primary/50 hover:bg-white hover:shadow-[0_12px_35px_rgba(101,203,204,0.18)] transition-all duration-300"
+            transition={{ duration: 0.35, delay: 0.05 * index }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className="group relative flex flex-col items-center justify-center rounded-2xl bg-white p-3 sm:p-4 h-24 sm:h-28 shadow-sm border border-slate-100 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
+            title={partner.name}
           >
-            {/* Ambient hover light */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-            {/* Logo Container */}
-            <div className="relative flex h-20 w-full items-center justify-center px-2">
-              <Image
-                src={partner.logo}
+            <div className="relative flex h-full w-full items-center justify-center">
+              <img
+                src={`/logos/${encodeURIComponent(partner.file)}`}
                 alt={partner.name}
-                width={partner.width}
-                height={partner.height}
-                className="max-h-14 sm:max-h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                priority={index < 3}
+                className="max-h-12 sm:max-h-14 max-w-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
               />
-            </div>
-
-            {/* Partner Details */}
-            <div className="mt-4 w-full text-center border-t border-slate-100/80 pt-3">
-              <h3 className="text-xs sm:text-sm font-bold text-navy truncate group-hover:text-primary-dark transition-colors">
-                {partner.name}
-              </h3>
-              <p className="mt-1 text-[11px] text-slate-400 font-medium truncate">
-                {partner.category}
-              </p>
             </div>
           </motion.div>
         ))}

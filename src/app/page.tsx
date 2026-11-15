@@ -6,6 +6,8 @@ import {
   Activity,
   ShieldCheck,
   ArrowLeft,
+  FileText,
+  ArrowUpRight,
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -35,6 +37,23 @@ export default function HomePage() {
           <p className="mt-5 text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
             حملة مجتمعية للتوعية بالسمنة وأمراض السكري، تجمع بين الأنشطة الميدانية والأدوات الرقمية، وتدعم الكشف المبكر والوصول إلى الرعاية والمتابعة المناسبة في المملكة.
           </p>
+
+          {/* Type 2 Diabetes Awareness Brochure Link */}
+          <div className="mt-4 flex items-center justify-center">
+            <a
+              href="/docs/diabetes-awareness-guide.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-2xl glass-panel px-4 py-2 text-xs sm:text-sm font-bold text-navy border border-primary/30 shadow-sm transition hover:bg-white hover:border-primary hover:shadow-md"
+              title="تصفح وتحميل كتيّب التوعية لمرضى السكري من النوع الثاني"
+            >
+              <FileText className="h-4 w-4 text-primary transition-transform group-hover:scale-110" />
+              <span className="underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">
+                تصفح كتيّب التوعية لمرضى السكري من النوع الثاني (PDF)
+              </span>
+              <ArrowUpRight className="h-3.5 w-3.5 text-slate-400 group-hover:text-primary transition-colors" />
+            </a>
+          </div>
 
           {/* Interactive Living Balance Ring */}
           <div className="mt-8 sm:mt-10">
