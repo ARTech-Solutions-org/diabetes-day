@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Handshake, Sparkles, Activity } from 'lucide-react';
+import { Handshake, Sparkles } from 'lucide-react';
 
 interface Partner {
   id: string;
@@ -21,16 +21,22 @@ const PARTNERS: Partner[] = [
   { id: '9', name: 'CISA', file: 'Path 9.svg' },
 ];
 
-// Duplicate partners array to ensure seamless infinite looping marquee
-const TICKER_ITEMS = [...PARTNERS, ...PARTNERS];
+/*
+  Seamless infinite loop technique:
+  - Render [A, A] (two identical sets)
+  - Animate from translateX(0) → translateX(-50%)
+  - At -50% the visual position is exactly where it started → snap reset is invisible
+  - User sees: ...1 2 3 4 5 6 7 8 9 | 1 2 3 4 5 6 7 8 9 | 1 2 3...  forever
+*/
+const LOOP_ITEMS = [...PARTNERS, ...PARTNERS];
 
 export default function SuccessPartners() {
   return (
     <section className="relative w-full overflow-hidden mt-20 sm:mt-28 mb-12">
-      {/* Subtle Ambient Background Glow */}
+      {/* Ambient Background Glow */}
       <div className="pointer-events-none absolute left-1/2 -top-16 -translate-x-1/2 h-72 w-[800px] rounded-full bg-primary/10 blur-3xl opacity-70" />
 
-      {/* Section Header */}
+      {/* ── Section Header ── */}
       <div className="relative text-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -68,43 +74,62 @@ export default function SuccessPartners() {
         </motion.p>
       </div>
 
-      {/* News-Ticker Style Marquee Showcase */}
-      <div className="relative w-full overflow-hidden py-4">
-        {/* Left & Right Soft Fade Gradients (Broadcast / Ticker Edge Fade) */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 via-slate-50/90 to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-36 md:w-48 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent z-10" />
+      {/* ── Infinite Marquee Strip ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.25 }}
+        className="relative w-full overflow-hidden"
+      >
+        {/* Left soft fade */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 sm:w-44 md:w-60 z-10 bg-gradient-to-r from-white/95 via-white/60 to-transparent" />
+        {/* Right soft fade */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 sm:w-44 md:w-60 z-10 bg-gradient-to-l from-white/95 via-white/60 to-transparent" />
 
-        {/* Continuous Scrolling Track */}
-        <div 
-          className="flex gap-5 sm:gap-6 animate-marquee select-none"
-          dir="ltr"
-        >
-          {TICKER_ITEMS.map((partner, index) => (
+        {/* Scrolling track — dir="ltr" keeps left-to-right scroll regardless of page RTL */}
+        <div className="animate-marquee py-5" dir="ltr">
+          {LOOP_ITEMS.map((partner, index) => (
             <div
               key={`${partner.id}-${index}`}
-              className="group/card flex-shrink-0 w-64 sm:w-72 md:w-80 h-36 sm:h-40 rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 shadow-sm border border-slate-200/80 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col items-center justify-between cursor-pointer"
+              className="
+                group/card
+                flex-shrink-0 inline-flex items-center justify-center
+                w-52 sm:w-60 md:w-68
+                h-28 sm:h-32 md:h-36
+                mx-3 sm:mx-4
+                rounded-2xl
+                bg-white
+                border border-slate-200/80
+                shadow-sm
+                hover:shadow-lg hover:shadow-primary/15
+                hover:border-primary/40
+                hover:scale-[1.06]
+                hover:-translate-y-1
+                transition-all duration-300 ease-out
+                cursor-pointer
+                p-4
+              "
               title={partner.name}
             >
-              {/* Logo Area (Large, High-Fidelity SVG in Full Color) */}
-              <div className="relative flex flex-1 w-full items-center justify-center p-2">
-                <img
-                  src={`/logos/${encodeURIComponent(partner.file)}`}
-                  alt={partner.name}
-                  className="max-h-20 sm:max-h-24 max-w-[88%] w-auto h-auto object-contain transition-transform duration-300 group-hover/card:scale-108"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Partner Name Label */}
-              <div className="w-full pt-2 border-t border-slate-100 flex items-center justify-center">
-                <span className="text-xs sm:text-sm font-semibold text-slate-500 group-hover/card:text-navy transition-colors truncate text-center max-w-full px-1">
-                  {partner.name}
-                </span>
-              </div>
+              <img
+                src={`/logos/${encodeURIComponent(partner.file)}`}
+                alt={partner.name}
+                className="
+                  max-h-16 sm:max-h-20 md:max-h-24
+                  max-w-[85%]
+                  w-auto h-auto
+                  object-contain
+                  transition-transform duration-300
+                  group-hover/card:scale-110
+                "
+                loading="lazy"
+                draggable={false}
+              />
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Decorative Bottom Endline */}
       <div className="mt-10 flex items-center justify-center gap-3 text-xs text-slate-400 px-4">

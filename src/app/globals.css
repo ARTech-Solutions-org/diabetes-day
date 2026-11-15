@@ -113,21 +113,19 @@ body {
 
 /* Infinite Marquee / News Ticker */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 35s linear infinite;
+  /* 32 s = smooth & readable; linear = no ease jerk */
+  animation: marquee 32s linear infinite;
   will-change: transform;
 }
 
+/* Pause on hover so users can read a logo without chasing it */
 .animate-marquee:hover {
   animation-play-state: paused;
 }
